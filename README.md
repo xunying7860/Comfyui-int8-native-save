@@ -13,7 +13,7 @@ ComfyUI 新版已[原生支持 INT8 量化](https://github.com/Comfy-Org/ComfyUI
 | 外部依赖 | Triton + 自身模块 | **零**（仅 PyTorch + safetensors） |
 | 量化步骤 | Load OTF → Save 旧格式 → 命令行转换 | **一步** |
 | 输出格式 | 旧格式（需 convert_to_comfy.py） | **ComfyUI 原生格式** |
-| 源格式支持 | BF16/FP16/FP32 | BF16/FP16/FP32/**FP8** |
+| 源格式 | 需手动选择 | **自动识别**（bf16/fp16/fp32/fp8） |
 | 独立运行 | 依赖 INT8-Fast 注册的 ops | **完全独立** |
 
 ## 安装
@@ -29,12 +29,13 @@ git clone https://github.com/xunying7860/Comfyui-int8-native-save.git
 
 在 ComfyUI 节点列表中找到 **"Quantize BF16 → INT8 ConvRot (Native)"**（分类: loaders）。
 
+节点只有 4 个参数，无需手动选择源精度（bf16/fp16/fp32/fp8 自动转为 float32 量化）。
+
 ### 参数
 
 | 参数 | 类型 | 默认 | 说明 |
 |------|------|------|------|
 | `unet_name` | 下拉 | — | 选择 `diffusion_models/` 下的模型 |
-| `weight_dtype` | 下拉 | `bf16` | 源权重精度（仅信息标识，所有格式统一转 float32 计算） |
 | `model_type` | 下拉 | `flux2` | 模型类型，决定哪些敏感层跳过量化 |
 | `enable_convrot` | 布尔 | `true` | 启用 ConvRot 旋转（~1.1× 推理开销，接近 GGUF Q8 质量） |
 | `output_name` | 字符串 | 自动生成 | 输出文件名（留空 = `{原名}_int8_native`） |
@@ -42,7 +43,7 @@ git clone https://github.com/xunying7860/Comfyui-int8-native-save.git
 ### 工作流
 
 ```
-BF16/FP8 模型 ──→ [Quantize BF16 → INT8 ConvRot] ──→ 原生 INT8 模型
+任意精度模型 ──→ [Quantize BF16 → INT8 ConvRot] ──→ 原生 INT8 模型
 ```
 
 输出文件保存到源模型同目录，可直接被 ComfyUI 原生 INT8 Loader 加载。
