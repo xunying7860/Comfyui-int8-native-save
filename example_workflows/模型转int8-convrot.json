@@ -1,0 +1,61 @@
+{
+  "id": "d0583cfe-ada0-4644-8794-a8c212c93c0d",
+  "revision": 0,
+  "last_node_id": 6,
+  "last_link_id": 0,
+  "nodes": [
+    {
+      "id": 5,
+      "type": "BF16ToINT8Native",
+      "pos": [
+        -160,
+        -1670
+      ],
+      "size": [
+        430,
+        130
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfyui-workflow-encrypt",
+        "ver": "1.0.0",
+        "Node name for S&R": "BF16ToINT8Native",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        "anima\\miaomiaoHarem_anima14.safetensors",
+        "anima",
+        true,
+        ""
+      ]
+    }
+  ],
+  "links": [],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ue_links": [],
+    "ds": {
+      "scale": 0.45,
+      "offset": [
+        2780.5555555555557,
+        3010.2851067741917
+      ]
+    },
+    "links_added_by_ue": [],
+    "frontendVersion": "1.45.21",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
