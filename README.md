@@ -64,18 +64,6 @@ BF16/FP8 模型 ──→ [Quantize BF16 → INT8 ConvRot] ──→ 原生 INT8
 | **hidream o1** | 排除 `embed`、LLM 层 |
 | **boogu** | 排除 `embed`、`refine`、`norm_out` |
 
-## 技术细节
-
-### ConvRot（Convolution Rotation）
-
-基于 QuaRot (2024) / ConvRot (2025)，使用 **Regular Hadamard 矩阵**（Theorem 3.3）在量化前旋转权重：
-
-1. **离线旋转**：权重按 256 分组，右乘 H^T（Hadamard 矩阵的转置）
-2. **Per-row INT8 量化**：逐行计算 absmax → scale = absmax/127 → clamp[-128, 127]
-3. **运行时反推**：推理时激活值也做同样的 Hadamard 旋转，使量化误差最小化
-
-与 Sylvester Hadamard 不同，Regular Hadamard 没有全 1 列，避免了扩散模型中逐行异常值的放大效应。
-
 ### 量化精度
 
 | 模型 | 格式 | Cos-sim vs BF16 | MSE ↓ |
