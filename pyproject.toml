@@ -1,0 +1,13 @@
+[project]
+name = "comfyui-int8-native-save"
+description = "将 BF16/FP8 扩散模型量化为 ComfyUI 原生 INT8 ConvRot 格式，一步完成，零外部依赖"
+version = "1.0.0"
+license = {file = "LICENSE"}
+keywords = ["comfyui", "int8", "quantization", "convrot", "native-format"]
+
+[project.urls]
+Repository = "https://github.com/xunying7860/Comfyui-int8-native-save"
+
+[tool.comfy]
+DisplayName = "Quantize BF16 → INT8 ConvRot (Native)"
+Icon = ""
