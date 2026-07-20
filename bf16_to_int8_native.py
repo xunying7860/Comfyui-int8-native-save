@@ -225,11 +225,7 @@ class BF16ToINT8Native:
             "required": {
                 "unet_name": (
                     folder_paths.get_filename_list("diffusion_models"),
-                    {"tooltip": "选择 diffusion_models/ 下的 BF16/FP8 模型文件"},
-                ),
-                "weight_dtype": (
-                    ["bf16", "fp16", "fp32", "fp8"],
-                    {"default": "bf16", "tooltip": "源权重精度。量化前统一转为 float32 计算。选 fp8 时适用 FP8(E4M3) 格式的模型"},
+                    {"tooltip": "选择 diffusion_models/ 下的模型文件。支持 bf16/fp16/fp32/fp8，自动转为 float32 量化"},
                 ),
                 "model_type": (
                     [
@@ -262,7 +258,6 @@ class BF16ToINT8Native:
     def convert(
         self,
         unet_name: str,
-        weight_dtype: str,
         model_type: str,
         enable_convrot: bool,
         output_name: str,
@@ -296,7 +291,7 @@ class BF16ToINT8Native:
         # ── 设备与精度 ──────────────────────────────────────────
         device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
-        print(f"[INT8 Native Save] 🖥️ 设备: {device}  |  源精度: {weight_dtype}")
+        print(f"[INT8 Native Save] 🖥️ 设备: {device}  |  模型: {unet_name}")
         print(f"[INT8 Native Save] 🔧 模型类型: {model_type}  |  ConvRot: {enable_convrot}")
 
         # ── 构建 Hadamard 矩阵（只构建一次，所有层复用） ────────
